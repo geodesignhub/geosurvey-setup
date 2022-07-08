@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Geoforage settings</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="js/leaflet.css" />
+    <link rel="stylesheet" href="vanilla.css" />
+    <style>
+        body {
+            margin: 0 auto;
+            max-width: 100rem;
+        }
+
+        @media(max-width:100rem) {
+            body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main role="main">
+        <section id='input'>
+            <legend>Setup your survey</legend>
+            <form action="#" onsubmit="return populate_data();" method="post" class="normform">
+                <fieldset> 
+                    <legend>Input GeoJSON for your features:</legend>
+                    <label for="text-input">Study area boundary:</label>
+                    <input id="study_area_boundary" type="text" placeholder='{"type":"FeatureCollection","features":[]}'>
+
+                    <label for="text-input">Default Polygon:</label>
+                    <input id="default_polygon" type="text" placeholder='{"type":"FeatureCollection","features":[]}'>
+
+                    <label for="text-input">Default Polyline</label>
+                    <input id="default_polyline" type="text" placeholder='{"type":"FeatureCollection","features":[]}'>
+
+                    <label for="text-input">Viewport Boundary</label>
+                    <input id="viewport_boundary" type="text" placeholder='{"type":"FeatureCollection","features":[]}'>
+                </fieldset>
+                <div class="inline-buttons">
+                    <input type="reset" value="Download" onclick="download_data()">
+                    <input type="submit" value="Build">
+                </div>
+            </form>
+
+        </section>
+
+        <section id="text">
+            <br>
+            <header>
+                <h2>Survey Output</h2>
+            </header>
+            <div id="map" style="width: 600px; height: 400px"></div>
+            <header>
+                <h4>Bounding Box</h4>
+            </header>
+            <pre id="bounding_box"></pre>
+
+            <header>
+                <h4>Default Zoom</h4>
+            </header>
+            <pre id="default_zoom"></pre>
+
+            <header>
+                <h4>Map Center</h4>
+            </header>
+            <pre id="map_center"></pre>
+
+            <header>
+                <h4>Default Polygon Co-ordinates</h4>
+            </header>
+            <code id="polygon_coords"></code>
+
+            <header>
+                <h4>Default Polyline Co-ordinates</h4>
+            </header>
+            <code id="polyline_coords"></code>
+
+            <header>
+                <h4>Study area</h4>
+            </header>
+            <code id="study_area"></code>
+
+        </section>
+        <a id="downloadAnchorElem" style="display:none"></a>
+    </main>
+
+    <script src="js/leaflet.js"></script>
+    <script src="js/turf.min.js"></script>
+
+
+    <script type="text/javascript">
+        function style(feature) {
+            return {
+                fillColor: '#FED976',
+                weight: 2,
+                opacity: 1,
+                color: 'white',
+                dashArray: '3',
+                fillOpacity: 0.7
+            };
+        }
+
+        function download_data(){
+            
+            var study_area_boundary = document.getElementById('study_area_boundary').value;            
+            var default_polygon = document.getElementById('default_polygon').value;            
+            var default_polyline = document.getElementById('default_polyline').value;            
+            var view_port_boundary = document.getElementById('viewport_boundary').value;  
+            let form_data = {"study_area_boundary":study_area_boundary,"default_polygon": default_polygon, "default_polyline": default_polyline ,"view_port_boundary": view_port_boundary };
+
+            var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(form_data));
+            var dlAnchorElem = document.getElementById('downloadAnchorElem');
+            dlAnchorElem.setAttribute("href",     dataStr     );
+            dlAnchorElem.setAttribute("download", "survey_geometries.json");
+            dlAnchorElem.click();
+        }
+        function populate_data() {
+            var study_area_boundary = document.getElementById('study_area_boundary').value;            
+            var default_polygon = document.getElementById('default_polygon').value;            
+            var default_polyline = document.getElementById('default_polyline').value;            
+            var view_port_boundary = document.getElementById('viewport_boundary').value;            
+
+            const p_polygon = turf.flip(JSON.parse(default_polygon));
+            const p_polyline = turf.flip(JSON.parse(default_polyline));
+
+
+            // console.log(p);
+
+            var map = L.map('map').setView([51.505, -0.09], 10);
+            var feats = new L.featureGroup().addTo(map);
+            L.tileLayer('https://tiles-6fcc.kxcdn.com/styles/ciwf3o3u2008z2pmq7pmvm6xq/{z}/{x}/{y}.png', {
+                // maxZoom: 18,
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+                    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                    'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+
+            }).addTo(map);
+
+            const b = L.geoJSON(JSON.parse(view_port_boundary)).addTo(feats);
+            if (study_area_boundary.length > 0) {
+                const sa = L.geoJSON(JSON.parse(study_area_boundary), {
+                    style: style
+                }).addTo(feats);
+            }
+
+            const bnds = feats.getBounds();
+
+            map.fitBounds(bnds);
+
+            let bb_ele = document.getElementById('bounding_box');
+            bb_ele.innerHTML = bnds.toBBoxString();
+
+            let zoom_ele = document.getElementById('default_zoom');
+            zoom_ele.innerHTML = map.getZoom();
+
+            let center_ele = document.getElementById('map_center');
+            center_ele.innerHTML = map.getCenter()
+            let poly_latlngs;
+
+            for (let index = 0; index < p_polygon.features.length; index++) {
+                const cur_polygon = p_polygon.features[index];
+                poly_latlngs = turf.getCoords(cur_polygon);
+            }
+
+
+            let polygon_coords_ele = document.getElementById('polygon_coords');
+            polygon_coords_ele.innerHTML = JSON.stringify(poly_latlngs);
+
+
+
+            let polyline_coords_ele = document.getElementById('polyline_coords');
+            polyline_coords_ele.innerHTML = JSON.stringify(p_polyline.features[0]['geometry']['coordinates'])
+
+
+            let study_area_ele = document.getElementById('study_area');
+            study_area_ele.innerHTML = study_area_boundary;
+            return false;
+
+            // console.log("Bounding Box : " +bnds.toBBoxString());
+            // console.log("Zoom : " + map.getZoom());
+            // console.log("Center : "+ map.getCenter());
+
+
+            // console.log("Def ault Polygon Coords : " + JSON.stringify(poly_latlngs));
+            // console.log("Default Polyline Coords : " + JSON.stringify(p_polyline.features[0]['geometry']['coordinates']));
+            // console.log("Study area : " + study_area_boundary);
+        }
+    </script>
+</body>
+
+</html>

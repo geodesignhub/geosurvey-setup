@@ -1,0 +1,157 @@
+/* Reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+* {
+    box-sizing: border-box;
+}
+
+
+
+/* Variables */
+:root {
+    --desktop-font-size: 1.3rem/1.5;
+    --mobile-font-size: 1.1rem/1.4;
+    --text-color: #2d2d2d;
+    --link-color: blue;
+    --primary-color: lightsteelblue;
+    --secondary-color: aliceblue;
+    --tertiary-color: whitesmoke;
+}
+
+
+
+
+/* Typography */
+body {
+    color: var(--text-color);
+}
+body, input {
+    font: var(--desktop-font-size) -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto, Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+h1,h2,h3,h4,h5,h6,p,blockquote,dl,img,figure {
+    margin: 2rem 0;
+}
+
+h1,h2,h3,h4,h5,h6 { font-weight: bold; line-height: 1.2; }
+h1 { font-size: 200%; }
+h2 { font-size: 150%; }
+h3 { font-size: 120%; }
+h4,h5,h6 { font-size: 100%; }
+h5, h6 { text-transform: uppercase; }
+
+header h4 { border-bottom: 1px solid; }
+
+p { margin: 2rem 0; }
+
+a,a:visited { color: var(--link-color); }
+
+strong, time, b { font-weight: bold; }
+em, dfn, i { font-style: italic; }
+sub { font-size: 60%; vertical-align: bottom; }
+small { font-size: 80%; }
+
+blockquote, q {
+    background: var(--secondary-color);
+    border-left: 10px solid var(--primary-color);
+    display: block;
+    font-family: "Georgia", serif;
+    padding: 1rem;
+}
+blockquote p:first-child { margin-top: 0; }
+cite {
+    font-family: "Georgia", serif;
+    font-style: italic;
+    font-weight: bold;
+}
+
+kbd,code,samp,pre,var { font-family: monospace; font-weight: bold; }
+code, pre {
+    background: var(--tertiary-color);
+    padding: 0.5rem 1rem;
+}
+code pre , pre code { padding: 0; }
+
+
+
+/* Elements */
+hr {
+    background: var(--text-color);
+    border: 0;
+    height: 1px;
+    margin: 4rem 0;
+}
+
+img {
+    display: block;
+    height: auto; 
+    max-width: 100%; 
+}
+
+figure {
+    border: 1px solid var(--primary-color);
+    display: inline-block;
+    padding: 1rem;
+    width: auto;
+}
+figure img { margin: 0; }
+figure figcaption { font-size: 80%; margin-top: 0.5rem; }
+
+ul, ol { margin: 2rem 0; padding: 0 0 0 4rem; }
+
+dl dd { padding-left: 2rem; }
+
+table {
+    border: 1px solid var(--primary-color);
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
+table caption { margin: 2rem 0; }
+table thead { text-align: center; }
+table tbody { text-align: right; }
+table tr { border-bottom: 1px solid var(--primary-color); }
+table tbody tr:nth-child(even) { background: var(--tertiary-color); }
+table th { background: var(--secondary-color); font-weight: bold; }
+table th, table td { padding: 1rem; }
+table th:not(last-of-type), table td:not(last-of-type) { border-right: 1px solid var(--primary-color); }
+
+input { 
+    appearance: none; 
+    border: 1px solid var(--text-color);
+    display: block;
+    margin: 0.5rem 0;
+    padding: 0.8rem; 
+}
+input:focus, input:active { background-color: var(--secondary-color); border-color: var(--link-color); }
+
+
+
+/* Mobile Styling */
+@media screen and (max-width: 50rem) {
+    body, input {
+        font: var(--mobile-font-size) -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto, Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol"
+    }
+    table { table-layout: auto; }
+}
+
+
+fieldset,form,label,legend,input,select,textarea,option{border:0;font-size:100%;font:inherit;margin:0;padding:0;vertical-align:baseline}*{box-sizing:border-box}:root{--nf-main-color: #4A90E2;--nf-main-color-faded: #EDF4FC;--nf-main-color-hover-color: #3B7CC8;--nf-success-border-color: #17C37B;--nf-error-border-color: #EFADB5;--nf-error-bg-color: #FEF7F8}form.normform label,form.normform input,form.normform textarea,form.normform select{display:block;position:relative;width:100%}form.normform input,form.normform textarea,form.normform .select-dropdown,form.normform .select-listed,form.normform input[type=checkbox]+label,form.normform input[type=radio]+label{margin-bottom:20px}form.normform fieldset{border:1px solid lightgrey;border-radius:2px;box-shadow:0 2px 8px 0 rgba(0,0,0,0.05);margin:20px 0;padding:20px 20px 0}form.normform legend{color:grey;font-size:80%;padding:0 10px;text-transform:uppercase}form.normform label{font-size:90%;margin-bottom:5px}form.normform input[type=text]:valid:not(:placeholder-shown),form.normform input[type=email]:valid:not(:placeholder-shown),form.normform input[type=password]:valid:not(:placeholder-shown),form.normform input[type=number]:valid:not(:placeholder-shown),form.normform textarea:valid:not(:placeholder-shown){border-color:var(--nf-success-border-color);border-left:5px solid var(--nf-success-border-color);-webkit-transition:none;transition:none}form.normform input,form.normform textarea,form.normform select,form.normform input[type=checkbox]+label,form.normform input[type=radio]+label{border:1px solid lightgrey;border-left:5px solid lightgrey;border-radius:5px;outline:none;padding:10px 15px}form.normform input:required,form.normform textarea:required,form.normform select:required{border-left:5px solid #EFADB5}form.normform input:focus,form.normform input[type=checkbox]:focus+label,form.normform input[type=radio]:focus+label,form.normform textarea:focus,form.normform select:focus{border-color:var(--nf-main-color);box-shadow:0 2px 5px 0 rgba(0,0,0,0.1)}form.normform input:invalid:not(:focus):not(:placeholder-shown),form.normform input:invalid:focus:not(:placeholder-shown){background:var(--nf-error-bg-color);border-color:var(--nf-error-border-color)}form.normform input:invalid:focus:not(:placeholder-shown) ~ .requirements{max-height:150px;padding:0 0 10px 10px}form.normform .requirements{color:red;font-size:80%;font-style:italic;max-height:0;overflow:hidden;padding:0 0 0 10px;position:relative;-ms-transition:.28s;-webkit-transition:.28s;top:-10px;transition:.28s}form.normform select{-webkit-appearance:none;-moz-appearance:none;appearance:none;background:white;margin:0;padding-right:40px}form.normform .select-dropdown{background:white;display:block;position:relative}form.normform .select-dropdown:after{background:none;border-color:lightgrey;border-style:solid;border-width:3px 3px 0 0;content:'';display:block;height:6px;position:absolute;right:15px;top:calc(50% - 6px);-webkit-transform:rotate(135deg);transform:rotate(135deg);width:6px}form.normform input[type=checkbox],form.normform input[type=radio],form.normform input[type=checkbox]+label,form.normform input[type=radio]+label{cursor:pointer;display:inline-block}form.normform input[type=checkbox]+label,form.normform input[type=radio]+label{border:1px solid lightgrey;font-size:100%;padding-left:30px;position:relative}form.normform input[type=checkbox]+label:before,form.normform input[type=radio]+label:before{background:white;border-radius:2px;border:1px solid black;content:'';height:9px;left:10px;position:absolute;top:calc(50% - 5px);width:9px}form.normform input[type=radio]+label:before{border-radius:100px}form.normform input[type=radio]:checked+label:before{background:var(--nf-main-color);border-color:var(--nf-main-color)}form.normform input[type=checkbox]+label:after{color:white;content:'✓';display:none;font-size:14px;font-weight:bold;left:11px;position:absolute;text-shadow:0 1px 2px rgba(0,0,0,0.4);top:calc(50% - 10px)}form.normform input[type=radio]+label:after{background:white;border-radius:100px;box-shadow:0 1px 2px rgba(0,0,0,0.4);content:'';display:none;position:absolute;width:5px;height:5px;left:13px;top:calc(50% - 2px)}form.normform input[type=radio]:checked+label:after{display:block}form.normform input[type=checkbox]:focus+label,form.normform input[type=radio]:focus+label{border-color:var(--nf-main-color)}form.normform input[type=checkbox]:checked+label,form.normform input[type=radio]:checked+label{background:var(--nf-main-color-faded);border-color:var(--nf-main-color)}form.normform input[type=checkbox]:checked+label:before{background:var(--nf-main-color);border-color:var(--nf-main-color)}form.normform input[type=checkbox]:checked+label:after{display:block}form.normform input[type=checkbox],form.normform input[type=radio]{margin-right:5px;position:absolute;width:auto;z-index:-1}form.normform input[type=submit],form.normform input[type=reset]{border-radius:4px;cursor:pointer;display:inline-block;margin:0;padding:12px 15px;position:relative;-webkit-appearance:none;-moz-appearance:none;appearance:none;width:100%;top:0}form.normform input[type=submit]:hover,form.normform input[type=reset]:hover{box-shadow:0 5px 10px 0 rgba(0,0,0,0.1)}form.normform input[type=submit]:focus{border-color:rgba(0,0,0,0.6)}form.normform input[type=reset]:focus{border-color:var(--nf-main-color)}form.normform input[type="submit"]{background:var(--nf-main-color);border:1px solid #4A90E2;color:white}form.normform input[type=submit]:hover{background:var(--nf-main-color-hover-color)}form.normform input[type="reset"]{background:white;border:1px solid lightgrey;color:grey}form.normform .inline-buttons{display:-webkit-box;display:flex}form.normform .inline-buttons input:first-of-type{margin-right:10px}form.normform .inline-buttons input[type=submit],form.normform .inline-buttons input[type=reset]{width:50%}

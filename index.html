@@ -112,7 +112,7 @@
             var view_port_boundary = document.getElementById('viewport_boundary').value;  
             let form_data = {"study_area_boundary":study_area_boundary,"default_polygon": default_polygon, "default_polyline": default_polyline ,"view_port_boundary": view_port_boundary };
 
-            var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(form_data));
+            var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(form_data);
             var dlAnchorElem = document.getElementById('downloadAnchorElem');
             dlAnchorElem.setAttribute("href",     dataStr     );
             dlAnchorElem.setAttribute("download", "survey_geometries.json");
